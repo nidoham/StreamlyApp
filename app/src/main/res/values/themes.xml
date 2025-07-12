@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base application theme -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary colors -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        
+        <!-- Background colors -->
+        <item name="android:windowBackground">@color/background</item>
+        <item name="android:colorBackground">@color/background</item>
+        
+        <!-- Text colors -->
+        <item name="android:textColorPrimary">@color/textPrimary</item>
+        <item name="android:textColorSecondary">@color/textSecondary</item>
+        
+        <!-- Button style -->
+        <item name="materialButtonStyle">@style/Widget.Streamly.Button</item>
+    </style>
+
+    <!-- Full-screen theme (extends base theme) -->
+    <style name="FullScreenTheme" parent="AppTheme">
+        <!-- Hide status bar -->
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+        
+        <!-- Hide navigation bar -->
+        <item name="android:windowTranslucentNavigation">false</item>
+        
+        <!-- Handle display cutouts -->
+        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
+        
+        <!-- Transparent system bars -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:fitsSystemWindows">false</item>
+    </style>
+
+    <!-- Button style -->
+    <style name="Widget.Streamly.Button" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@color/colorPrimary</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="cornerRadius">8dp</item>
+    </style>
+</resources>

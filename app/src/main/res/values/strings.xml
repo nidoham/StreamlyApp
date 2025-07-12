@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Streamly</string>
+
+    <!-- Current Settings -->
+    <string name="youtube_restricted_mode_enabled">youtube_restricted_mode_enabled</string>
+    <string name="title_activity_recaptcha">Solve reCAPTCHA</string>
+    <string name="subtitle_activity_recaptcha">Solve the challenge to continue</string>
+
+</resources>
