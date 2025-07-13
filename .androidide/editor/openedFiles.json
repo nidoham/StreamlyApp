@@ -1,35 +1,35 @@
 {
   "allFiles": [
     {
-      "file": "/storage/emulated/0/AndroidIDEProjects/Streamly/app/src/main/AndroidManifest.xml",
+      "file": "/storage/emulated/0/AndroidIDEProjects/Streamly/app/src/main/java/com/nidoham/streamly/MainActivity.java",
       "selection": {
         "end": {
-          "column": 0,
-          "index": 0,
-          "line": 0
+          "column": 45,
+          "index": 1816,
+          "line": 50
         },
         "start": {
-          "column": 0,
-          "index": 0,
-          "line": 0
+          "column": 45,
+          "index": 1816,
+          "line": 50
         }
       }
     },
     {
-      "file": "/storage/emulated/0/AndroidIDEProjects/Streamly/app/src/main/java/com/nidoham/streamly/SplashActivity.java",
+      "file": "/storage/emulated/0/AndroidIDEProjects/Streamly/app/src/main/res/layout/activity_main.xml",
       "selection": {
         "end": {
-          "column": 49,
-          "index": 344,
-          "line": 12
+          "column": 47,
+          "index": 1997,
+          "line": 44
         },
         "start": {
-          "column": 49,
-          "index": 344,
-          "line": 12
+          "column": 47,
+          "index": 1997,
+          "line": 44
         }
       }
     }
   ],
-  "selectedFile": "/storage/emulated/0/AndroidIDEProjects/Streamly/app/src/main/java/com/nidoham/streamly/SplashActivity.java"
+  "selectedFile": "/storage/emulated/0/AndroidIDEProjects/Streamly/app/src/main/res/layout/activity_main.xml"
 }

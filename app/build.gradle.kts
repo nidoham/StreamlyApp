@@ -60,4 +60,16 @@ dependencies {
     implementation("com.google.android.material:material:1.9.0")
     
     implementation("androidx.preference:preference-ktx:1.2.1")
+    
+    implementation("io.reactivex.rxjava3:rxjava:3.1.8")
+    implementation("io.reactivex.rxjava3:rxandroid:3.0.2")
+    
+    val media3Version = "1.3.1"
+    implementation("androidx.media3:media3-exoplayer:$media3Version")
+    implementation("androidx.media3:media3-ui:$media3Version")
+    implementation("androidx.media3:media3-session:$media3Version")
+    implementation("androidx.media3:media3-exoplayer-hls:$media3Version")
+    implementation("androidx.media3:media3-exoplayer-dash:$media3Version")
+    
+    implementation("androidx.viewpager2:viewpager2:1.0.0")
 }
