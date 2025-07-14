@@ -1,17 +1,32 @@
 {
   "allFiles": [
     {
+      "file": "/storage/emulated/0/AndroidIDEProjects/Streamly/app/src/main/java/exp/nidoham/image/ImageStrategy.java",
+      "selection": {
+        "end": {
+          "column": 27,
+          "index": 6279,
+          "line": 157
+        },
+        "start": {
+          "column": 27,
+          "index": 6279,
+          "line": 157
+        }
+      }
+    },
+    {
       "file": "/storage/emulated/0/AndroidIDEProjects/Streamly/app/src/main/java/com/nidoham/streamly/adapter/VideoAdapter.java",
       "selection": {
         "end": {
-          "column": 64,
-          "index": 4776,
-          "line": 116
+          "column": 103,
+          "index": 3941,
+          "line": 107
         },
         "start": {
-          "column": 64,
-          "index": 4776,
-          "line": 116
+          "column": 103,
+          "index": 3941,
+          "line": 107
         }
       }
     }

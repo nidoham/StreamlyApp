@@ -9,13 +9,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
-import com.nidoham.streamly.R; // Ensure this is correctly imported for your drawables
+import com.nidoham.streamly.R;
 import com.nidoham.streamly.databinding.ItemVideosBinding;
 import com.nidoham.streamly.util.DurationFormatter;
 import com.nidoham.streamly.util.TimeAgoFormatter;
 import com.nidoham.streamly.util.Utils;
+import exp.nidoham.image.ImageStrategy;
+import java.util.Collections;
+import java.util.Comparator;
 import org.schabi.newpipe.extractor.Image;
 import org.schabi.newpipe.extractor.stream.StreamInfoItem;
+
+import exp.nidoham.image.ImageStrategy.PreferredImageQuality;
 
 import java.util.List;
 import java.util.Objects;
@@ -86,52 +91,85 @@ public class VideoAdapter extends ListAdapter<StreamInfoItem, VideoAdapter.Video
          * @param video The StreamInfoItem to bind.
          */
         public void bind(StreamInfoItem video) {
-            // Set Video Title
-            binding.tvTitle.setText(video.getName());
-
-            // Load Video Thumbnail using Glide
-            // NewPipe's StreamInfoItem provides a list of ThumbnailInfo objects.
-            // ThumbnailInfo directly provides the URL as a String.
-            String thumbnailUrl = null;
-            List<Image> thumbnails = video.getThumbnails();
-            if (thumbnails != null && !thumbnails.isEmpty()) {
-                thumbnailUrl = thumbnails.get(0).getUrl(); // Get the URL string from ThumbnailInfo
+            if (video == null) {
+                return;
             }
 
-            Glide.with(binding.ivThumbnail.getContext())
-                    .load(thumbnailUrl) // Load the URL, can be null if no thumbnail
-                    .placeholder(R.drawable.placeholder_thumbnail) // Provide a placeholder drawable
-                    .error(R.drawable.error_thumbnail) // Provide an error drawable
-                    .centerCrop()
-                    .transition(DrawableTransitionOptions.withCrossFade())
-                    .into(binding.ivThumbnail);
+            // Set preferred image quality for thumbnails
+            ImageStrategy.setPreferredImageQuality(PreferredImageQuality.HIGH);
+            
+            // Get thumbnail and channel avatar URLs
+            String thumbnailUrl = null;
+            String channelAvatar = null;
+            
+            try {
+                List<Image> thumbnails = video.getThumbnails();
+                if (thumbnails != null && !thumbnails.isEmpty()) {
+                    thumbnailUrl = Collections.max(thumbnails, Comparator.comparingInt(Image::getWidth)).getUrl();
+                    //thumbnailUrl = ImageStrategy.choosePreferredImage(thumbnails);
+                }
+                
+                List<Image> uploaderAvatars = video.getUploaderAvatars();
+                if (uploaderAvatars != null && !uploaderAvatars.isEmpty()) {
+                    channelAvatar = ImageStrategy.choosePreferredImage(uploaderAvatars);
+                }
+            } catch (Exception e) {
+                // Handle any exceptions silently and continue with null URLs
+                e.printStackTrace();
+            }
+
+            // Set Video Title
+            String title = video.getName();
+            binding.tvTitle.setText(title != null ? title : "Unknown Title");
+            
+            ImageStrategy.loadImage(binding.ivThumbnail.getContext(), thumbnailUrl ,binding.ivThumbnail);
+            ImageStrategy.loadImage(binding.ivThumbnail.getContext(), channelAvatar ,binding.ivChannelLogo);
 
             // Set Video Duration
-            binding.tvDuration.setText(DurationFormatter.formatSeconds(video.getDuration()));
-
-            // Load Channel Logo using Glide
-            // StreamInfoItem does not directly provide uploader avatar URL.
-            // You might need to fetch ChannelInfo separately for the actual avatar.
-            // For now, we'll use a generic placeholder.
-            Glide.with(binding.ivChannelLogo.getContext())
-                    .load(R.drawable.placeholder_channel_logo) // Use a static placeholder
-                    .circleCrop() // Apply circular crop for channel logo
-                    .transition(DrawableTransitionOptions.withCrossFade())
-                    .into(binding.ivChannelLogo);
+            long duration = video.getDuration();
+            if (duration > 0) {
+                binding.tvDuration.setText(DurationFormatter.formatSeconds(duration));
+                binding.tvDuration.setVisibility(android.view.View.VISIBLE);
+            } else {
+                binding.tvDuration.setVisibility(android.view.View.GONE);
+            }
 
             // Set Channel Name and Views/Upload Date
             String channelName = video.getUploaderName();
             long viewCount = video.getViewCount();
             
-            String uploadTime = TimeAgoFormatter.format(video.getUploadDate().date().getTime());
+            StringBuilder infoBuilder = new StringBuilder();
             
-            StringBuilder builder = new StringBuilder();
-            builder.append(Utils.formatViewCount(viewCount));
-            builder.append(" • ");
-            builder.append(uploadTime);
+            // Add channel name if available
+            if (channelName != null && !channelName.trim().isEmpty()) {
+                binding.tvTitle.setText(channelName);
+            } else {
+                binding.tvTitle.setText("Unknown Channel");
+            }
+            
+            // Add view count
+            if (viewCount >= 0) {
+                infoBuilder.append(Utils.formatViewCount(viewCount));
+            }
+            
+            // Add upload time
+            try {
+                if (video.getUploadDate() != null && video.getUploadDate().date() != null) {
+                    String uploadTime = TimeAgoFormatter.format(video.getUploadDate().date().getTime());
+                    if (uploadTime != null && !uploadTime.trim().isEmpty()) {
+                        if (infoBuilder.length() > 0) {
+                            infoBuilder.append(" • ");
+                        }
+                        infoBuilder.append(uploadTime);
+                    }
+                }
+            } catch (Exception e) {
+                // Handle upload date parsing errors
+                e.printStackTrace();
+            }
 
-            String channelInfo = builder.toString();
-            binding.tvChannelInfo.setText(channelInfo);
+            String channelInfo = infoBuilder.toString();
+            binding.tvChannelInfo.setText(channelInfo.isEmpty() ? "No info available" : channelInfo);
 
             // Click listener for the whole item
             binding.getRoot().setOnClickListener(v -> {
@@ -157,19 +195,27 @@ public class VideoAdapter extends ListAdapter<StreamInfoItem, VideoAdapter.Video
             new DiffUtil.ItemCallback<StreamInfoItem>() {
                 @Override
                 public boolean areItemsTheSame(@NonNull StreamInfoItem oldItem, @NonNull StreamInfoItem newItem) {
-                    // Assuming StreamInfoItem has a unique URL or ID that identifies it.
-                    // This is critical for DiffUtil to correctly identify moved or changed items.
+                    // Use URL as unique identifier
+                    if (oldItem == null || newItem == null) {
+                        return oldItem == newItem;
+                    }
                     return Objects.equals(oldItem.getUrl(), newItem.getUrl());
                 }
 
                 @Override
                 public boolean areContentsTheSame(@NonNull StreamInfoItem oldItem, @NonNull StreamInfoItem newItem) {
-                    // Return true if the contents of the items are the same.
-                    // This determines if the item's views need to be updated (re-bound).
-                    // This requires StreamInfoItem to properly override equals() and hashCode().
-                    // If StreamInfoItem doesn't override equals/hashCode, this might always return false,
-                    // leading to unnecessary re-binds.
-                    return oldItem.equals(newItem);
+                    if (oldItem == null || newItem == null) {
+                        return oldItem == newItem;
+                    }
+                    
+                    // Compare key properties that affect the UI
+                    return Objects.equals(oldItem.getName(), newItem.getName()) &&
+                           Objects.equals(oldItem.getUploaderName(), newItem.getUploaderName()) &&
+                           oldItem.getViewCount() == newItem.getViewCount() &&
+                           oldItem.getDuration() == newItem.getDuration() &&
+                           Objects.equals(oldItem.getUploadDate(), newItem.getUploadDate()) &&
+                           Objects.equals(oldItem.getThumbnails(), newItem.getThumbnails()) &&
+                           Objects.equals(oldItem.getUploaderAvatars(), newItem.getUploaderAvatars());
                 }
             };
 }

@@ -95,8 +95,4 @@
          android:clipToPadding="false"
          android:id="@+id/content_container" />
 
-    <Space
-         android:layout_height="?attr/actionBarSize"
-         android:layout_width="match_parent" />
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
