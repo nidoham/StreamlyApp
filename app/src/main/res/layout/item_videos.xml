@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+     xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:app="http://schemas.android.com/apk/res-auto"
+     android:layout_height="wrap_content"
+     android:layout_width="match_parent"
+     android:background="@android:color/black"
+     android:orientation="vertical"
+     android:paddingBottom="16dp">
+
+    <FrameLayout
+         android:layout_height="200dp"
+         android:layout_width="match_parent"
+         android:layout_marginBottom="8dp">
+
+        <ImageView
+             android:layout_height="match_parent"
+             android:layout_width="match_parent"
+             android:scaleType="centerCrop"
+             android:background="@android:color/black"
+             android:id="@+id/iv_thumbnail" />
+
+        <TextView
+             android:layout_height="wrap_content"
+             android:layout_width="wrap_content"
+             android:background="@drawable/duration_background"
+             android:layout_margin="8dp"
+             android:padding="4dp"
+             android:textSize="12sp"
+             android:textColor="@android:color/white"
+             android:id="@+id/tv_duration"
+             android:layout_gravity="bottom|end"
+             android:text="2:26"
+             android:textStyle="bold" />
+
+    </FrameLayout>
+
+    <LinearLayout
+         android:layout_height="wrap_content"
+         android:layout_width="match_parent"
+         android:orientation="horizontal"
+         android:paddingHorizontal="12dp">
+
+        <ImageView
+             android:layout_height="40dp"
+             android:layout_width="40dp"
+             android:layout_marginEnd="12dp"
+             android:scaleType="centerCrop"
+             android:background="@drawable/circle_background"
+             android:padding="8dp"
+             android:id="@+id/iv_channel_logo" />
+
+        <LinearLayout
+             android:layout_height="wrap_content"
+             android:layout_width="0dp"
+             android:orientation="vertical"
+             android:layout_weight="1">
+
+            <TextView
+                 android:layout_height="wrap_content"
+                 android:layout_width="match_parent"
+                 android:ellipsize="end"
+                 android:textSize="14sp"
+                 android:textColor="@android:color/white"
+                 android:maxLines="2"
+                 android:id="@+id/tv_title"
+                 android:text="এবার অনুসন্ধানে বেরিয়ে এলো সোনাম হত্যা-র আসল তথ্য | Puran Dhaka Incident | Mitford |..."
+                 android:textStyle="normal" />
+
+            <TextView
+                 android:layout_height="wrap_content"
+                 android:layout_width="match_parent"
+                 android:textSize="12sp"
+                 android:textColor="@android:color/darker_gray"
+                 android:layout_marginTop="4dp"
+                 android:id="@+id/tv_channel_info"
+                 android:text="Channel 24 • 1 day ago • 2.3M views" />
+
+        </LinearLayout>
+
+        <ImageView
+             android:layout_height="24dp"
+             android:layout_width="24dp"
+             android:src="@drawable/ic_download"
+             android:background="?attr/selectableItemBackgroundBorderless"
+             android:padding="4dp"
+             android:layout_marginStart="8dp"
+             android:id="@+id/iv_download"
+             android:layout_gravity="center_vertical" />
+
+    </LinearLayout>
+
+</LinearLayout>

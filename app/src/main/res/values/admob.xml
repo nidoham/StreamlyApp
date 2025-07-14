@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- AdMob App ID -->
+    <string name="admob_app_id">ca-app-pub-3549042878054877~8806083327</string>
+
+    <!-- Banner Ad Unit ID -->
+    <string name="banner_ad_unit_id">ca-app-pub-3549042878054877/4126238764</string>
+    <string name="banner_ad_unit_id_test">ca-app-pub-3940256099942544/6300978111</string>
+</resources>

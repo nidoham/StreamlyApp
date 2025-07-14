@@ -1,35 +1,20 @@
 {
   "allFiles": [
     {
-      "file": "/storage/emulated/0/AndroidIDEProjects/Streamly/app/src/main/java/com/nidoham/streamly/MainActivity.java",
+      "file": "/storage/emulated/0/AndroidIDEProjects/Streamly/app/src/main/java/com/nidoham/streamly/adapter/VideoAdapter.java",
       "selection": {
         "end": {
-          "column": 45,
-          "index": 1816,
-          "line": 50
+          "column": 64,
+          "index": 4776,
+          "line": 116
         },
         "start": {
-          "column": 45,
-          "index": 1816,
-          "line": 50
-        }
-      }
-    },
-    {
-      "file": "/storage/emulated/0/AndroidIDEProjects/Streamly/app/src/main/res/layout/activity_main.xml",
-      "selection": {
-        "end": {
-          "column": 47,
-          "index": 1997,
-          "line": 44
-        },
-        "start": {
-          "column": 47,
-          "index": 1997,
-          "line": 44
+          "column": 64,
+          "index": 4776,
+          "line": 116
         }
       }
     }
   ],
-  "selectedFile": "/storage/emulated/0/AndroidIDEProjects/Streamly/app/src/main/res/layout/activity_main.xml"
+  "selectedFile": "/storage/emulated/0/AndroidIDEProjects/Streamly/app/src/main/java/com/nidoham/streamly/adapter/VideoAdapter.java"
 }

@@ -7,12 +7,13 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.nidoham.streamly.fragment.*;
-
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.nidoham.streamly.databinding.ActivityMainBinding;
-import org.schabi.newpipe.extractor.timeago.patterns.fa;
+
+import com.nidoham.streamly.fragment.*;
+
+// AdMob imports
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
@@ -24,11 +25,12 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // ViewPager এবং TabLayout সেটআপ
         setupViewPager(binding.contentContainer);
         setupTabLayout(binding.tabs, binding.contentContainer);
     }
 
-    // Set up ViewPager with fragments
+    // ViewPager এবং Fragment এডাপ্টার
     private void setupViewPager(ViewPager2 viewPager) {
         viewPager.setAdapter(new FragmentStateAdapter(this) {
             @NonNull
@@ -47,15 +49,26 @@ public class MainActivity extends AppCompatActivity {
                 return tabTitles.length;
             }
         });
-        
+
         viewPager.setUserInputEnabled(false);
     }
 
-    // Link TabLayout with ViewPager
+    // TabLayout এবং ViewPager2 লিংক করুন
     private void setupTabLayout(TabLayout tabLayout, ViewPager2 viewPager) {
         new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
             tab.setText(tabTitles[position]);
         }).attach();
+    }
+
+    // AdView লাইফসাইকেল মেথডস
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     @Override
