@@ -1,0 +1,24 @@
+<resources>
+    <!-- Toolbar dimensions -->
+    <dimen name="toolbar_margin_top">12dp</dimen>
+    <dimen name="toolbar_horizontal_padding">48dp</dimen>
+    
+    <!-- App icon dimensions -->
+    <dimen name="app_icon_size">56dp</dimen>
+    <dimen name="app_icon_margin_start">32dp</dimen>
+    <dimen name="app_icon_corner_radius">16dp</dimen>
+    <dimen name="app_icon_elevation">4dp</dimen>
+    <dimen name="app_icon_stroke_width">2dp</dimen>
+    
+    <!-- Title dimensions -->
+    <dimen name="title_margin_start">24dp</dimen>
+    <dimen name="title_margin_end">24dp</dimen>
+    
+    <!-- Action button dimensions -->
+    <dimen name="action_button_size">64dp</dimen>
+    <dimen name="action_button_margin">16dp</dimen>
+    
+    <!-- Tab dimensions -->
+    <dimen name="tabs_horizontal_margin">48dp</dimen>
+    <dimen name="tabs_top_margin">16dp</dimen>
+</resources>

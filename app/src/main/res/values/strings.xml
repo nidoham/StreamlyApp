@@ -39,4 +39,21 @@
     <string name="youtube_restricted_mode_enabled">YouTubeRestrictedModeEnabled</string>
     <string name="title_activity_recaptcha">Solve reCAPTCHA</string>
     <string name="subtitle_activity_recaptcha">Solve the challenge to continue</string>
+    
+    <!-- Loading state -->
+    <string name="loading_text">Loading content…</string>
+    
+    <!-- Error state -->
+    <string name="error_icon_description">Error icon</string>
+    <string name="default_error_message">Something went wrong. Please try again.</string>
+    <string name="retry_button_text">Retry</string>
+    <string name="retry_button_description">Retry loading content</string>
+    
+    <!-- Empty state -->
+    <string name="empty_state_description">No content available</string>
+    <string name="empty_state_message">No content available at the moment</string>
+    
+    <!-- Swipe refresh -->
+    <string name="swipe_refresh_description">Pull to refresh content</string>
+
 </resources>

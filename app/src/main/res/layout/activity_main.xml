@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout
      xmlns:android="http://schemas.android.com/apk/res/android"
-     xmlns:ads="http://schemas.android.com/apk/res-auto"
+     xmlns:app="http://schemas.android.com/apk/res-auto"
      xmlns:tools="http://schemas.android.com/tools"
      android:layout_height="match_parent"
      android:layout_width="match_parent"
-     android:background="@color/background">
+     android:background="@color/background"
+     android:fitsSystemWindows="true">
 
     <com.google.android.material.appbar.AppBarLayout
          android:layout_height="wrap_content"
          android:layout_width="match_parent"
          android:background="@color/background"
+         android:layout_marginHorizontal="10dp"
          android:id="@+id/app_bar">
 
         <com.google.android.material.appbar.MaterialToolbar
@@ -21,19 +23,18 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                  android:layout_height="match_parent"
                  android:layout_width="match_parent"
-                 android:layout_marginLeft="10dp"
-                 android:layout_marginRight="5dp"
+                 android:layout_marginEnd="5dp"
                  android:layout_marginTop="5dp">
 
                 <ImageView
                      android:layout_height="40dp"
                      android:layout_width="40dp"
+                     android:scaleType="centerCrop"
                      android:src="@mipmap/ic_launcher"
-                     ads:layout_constraintTop_toTopOf="parent"
-                     ads:layout_constraintStart_toStartOf="parent"
-                     ads:layout_constraintBottom_toBottomOf="parent"
-                     android:layout_marginStart="20dp"
-                     tools:ignore="ContentDescription"
+                     app:layout_constraintTop_toTopOf="parent"
+                     app:layout_constraintStart_toStartOf="parent"
+                     app:layout_constraintBottom_toBottomOf="parent"
+                     android:layout_marginStart="5dp"
                      android:id="@+id/app_icon" />
 
                 <TextView
@@ -41,12 +42,12 @@
                      android:layout_width="0dp"
                      android:layout_marginEnd="8dp"
                      android:ellipsize="end"
-                     ads:layout_constraintEnd_toStartOf="@id/action_settings"
-                     ads:layout_constraintStart_toEndOf="@id/app_icon"
-                     ads:layout_constraintBottom_toBottomOf="parent"
+                     app:layout_constraintEnd_toStartOf="@id/action_settings"
+                     app:layout_constraintStart_toEndOf="@id/app_icon"
+                     app:layout_constraintBottom_toBottomOf="parent"
                      android:layout_marginStart="12dp"
                      android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
-                     ads:layout_constraintTop_toTopOf="parent"
+                     app:layout_constraintTop_toTopOf="parent"
                      android:maxLines="1"
                      android:id="@+id/title"
                      android:text="@string/app_name" />
@@ -55,21 +56,24 @@
                      android:layout_height="match_parent"
                      android:layout_width="wrap_content"
                      android:src="@drawable/ic_settings"
-                     ads:layout_constraintTop_toTopOf="parent"
-                     ads:layout_constraintEnd_toStartOf="@id/action_downloads"
-                     style="@style/Widget.AppCompat.ActionButton"
-                     ads:layout_constraintBottom_toBottomOf="parent"
+                     android:background="?attr/selectableItemBackgroundBorderless"
+                     app:layout_constraintTop_toTopOf="parent"
+                     android:layout_marginHorizontal="15dp"
+                     app:layout_constraintEnd_toStartOf="@id/action_downloads"
+                     app:layout_constraintBottom_toBottomOf="parent"
+                     android:focusable="true"
                      android:id="@+id/action_settings" />
 
                 <ImageButton
                      android:layout_height="match_parent"
                      android:layout_width="wrap_content"
+                     android:layout_marginEnd="6dp"
                      android:src="@drawable/ic_download"
-                     ads:layout_constraintTop_toTopOf="parent"
-                     android:layout_marginRight="6dp"
-                     ads:layout_constraintEnd_toEndOf="parent"
-                     style="@style/Widget.AppCompat.ActionButton"
-                     ads:layout_constraintBottom_toBottomOf="parent"
+                     android:background="?attr/selectableItemBackgroundBorderless"
+                     app:layout_constraintTop_toTopOf="parent"
+                     app:layout_constraintEnd_toEndOf="parent"
+                     app:layout_constraintBottom_toBottomOf="parent"
+                     android:focusable="true"
                      android:id="@+id/action_downloads" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -80,9 +84,9 @@
              android:layout_height="wrap_content"
              android:layout_width="match_parent"
              android:background="@color/background"
-             ads:tabMode="fixed"
+             app:tabMode="fixed"
              android:layout_marginHorizontal="10dp"
-             ads:tabGravity="fill"
+             app:tabGravity="fill"
              android:layout_marginTop="10dp"
              android:id="@+id/tabs" />
 
@@ -91,6 +95,7 @@
     <androidx.viewpager2.widget.ViewPager2
          android:layout_height="match_parent"
          android:layout_width="match_parent"
+         app:layout_behavior="@string/appbar_scrolling_view_behavior"
          android:background="@color/background"
          android:clipToPadding="false"
          android:id="@+id/content_container" />
