@@ -1,27 +1,20 @@
 package com.nidoham.streamly.adapter;
 
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.nidoham.streamly.R;
 import com.nidoham.streamly.databinding.ItemVideosBinding;
 import com.nidoham.streamly.util.DurationFormatter;
 import com.nidoham.streamly.util.TimeAgoFormatter;
 import com.nidoham.streamly.util.Utils;
 import exp.nidoham.image.ImageStrategy;
-import java.util.Collections;
-import java.util.Comparator;
 import org.schabi.newpipe.extractor.Image;
 import org.schabi.newpipe.extractor.stream.StreamInfoItem;
-
-import exp.nidoham.image.ImageStrategy.PreferredImageQuality;
-
 import java.util.List;
 import java.util.Objects;
 
@@ -37,16 +30,7 @@ public class VideoAdapter extends ListAdapter<StreamInfoItem, VideoAdapter.Video
      * Interface for handling click events on video items and their download buttons.
      */
     public interface OnVideoClickListener {
-        /**
-         * Called when the main video item is clicked.
-         * @param video The StreamInfoItem associated with the clicked item.
-         */
         void onVideoClick(StreamInfoItem video);
-
-        /**
-         * Called when the download button/icon within a video item is clicked.
-         * @param video The StreamInfoItem associated with the item whose download button was clicked.
-         */
         void onDownloadClick(StreamInfoItem video);
     }
 
@@ -96,79 +80,64 @@ public class VideoAdapter extends ListAdapter<StreamInfoItem, VideoAdapter.Video
             }
 
             // Set preferred image quality for thumbnails
-            ImageStrategy.setPreferredImageQuality(PreferredImageQuality.HIGH);
-            
-            // Get thumbnail and channel avatar URLs
+            ImageStrategy.setPreferredImageQuality(ImageStrategy.PreferredImageQuality.HIGH);
+
+            // Get thumbnail and channel avatar URLs with null checks
             String thumbnailUrl = null;
             String channelAvatar = null;
-            
-            try {
-                List<Image> thumbnails = video.getThumbnails();
-                if (thumbnails != null && !thumbnails.isEmpty()) {
-                    thumbnailUrl = Collections.max(thumbnails, Comparator.comparingInt(Image::getWidth)).getUrl();
-                    //thumbnailUrl = ImageStrategy.choosePreferredImage(thumbnails);
-                }
-                
-                List<Image> uploaderAvatars = video.getUploaderAvatars();
-                if (uploaderAvatars != null && !uploaderAvatars.isEmpty()) {
-                    channelAvatar = ImageStrategy.choosePreferredImage(uploaderAvatars);
-                }
-            } catch (Exception e) {
-                // Handle any exceptions silently and continue with null URLs
-                e.printStackTrace();
+
+            List<Image> thumbnails = video.getThumbnails();
+            if (thumbnails != null && !thumbnails.isEmpty()) {
+                thumbnailUrl = ImageStrategy.choosePreferredImage(thumbnails);
             }
+
+            List<Image> uploaderAvatars = video.getUploaderAvatars();
+            if (uploaderAvatars != null && !uploaderAvatars.isEmpty()) {
+                channelAvatar = ImageStrategy.choosePreferredImage(uploaderAvatars);
+            }
+
+            // Load images using ImageStrategy
+            ImageStrategy.loadImage(binding.ivThumbnail.getContext(), thumbnailUrl, binding.ivThumbnail);
+            ImageStrategy.loadImage(binding.ivChannelLogo.getContext(), channelAvatar, binding.ivChannelLogo);
 
             // Set Video Title
             String title = video.getName();
             binding.tvTitle.setText(title != null ? title : "Unknown Title");
-            
-            ImageStrategy.loadImage(binding.ivThumbnail.getContext(), thumbnailUrl ,binding.ivThumbnail);
-            ImageStrategy.loadImage(binding.ivThumbnail.getContext(), channelAvatar ,binding.ivChannelLogo);
 
             // Set Video Duration
             long duration = video.getDuration();
             if (duration > 0) {
                 binding.tvDuration.setText(DurationFormatter.formatSeconds(duration));
-                binding.tvDuration.setVisibility(android.view.View.VISIBLE);
+                binding.tvDuration.setVisibility(View.VISIBLE);
             } else {
-                binding.tvDuration.setVisibility(android.view.View.GONE);
+                binding.tvDuration.setVisibility(View.GONE);
             }
 
             // Set Channel Name and Views/Upload Date
             String channelName = video.getUploaderName();
             long viewCount = video.getViewCount();
-            
-            StringBuilder infoBuilder = new StringBuilder();
-            
-            // Add channel name if available
-            if (channelName != null && !channelName.trim().isEmpty()) {
-                binding.tvTitle.setText(channelName);
-            } else {
-                binding.tvTitle.setText("Unknown Channel");
-            }
-            
-            // Add view count
-            if (viewCount >= 0) {
-                infoBuilder.append(Utils.formatViewCount(viewCount));
-            }
-            
-            // Add upload time
-            try {
-                if (video.getUploadDate() != null && video.getUploadDate().date() != null) {
-                    String uploadTime = TimeAgoFormatter.format(video.getUploadDate().date().getTime());
-                    if (uploadTime != null && !uploadTime.trim().isEmpty()) {
-                        if (infoBuilder.length() > 0) {
-                            infoBuilder.append(" • ");
-                        }
-                        infoBuilder.append(uploadTime);
-                    }
-                }
-            } catch (Exception e) {
-                // Handle upload date parsing errors
-                e.printStackTrace();
+            String uploadTime = "";
+
+            if (video.getUploadDate() != null && video.getUploadDate().date() != null) {
+                uploadTime = TimeAgoFormatter.format(video.getUploadDate().date().getTime());
             }
 
-            String channelInfo = infoBuilder.toString();
+            // Set channel name
+            binding.tvTitle.setText(channelName != null && !channelName.trim().isEmpty() 
+                ? channelName 
+                : "Unknown Channel");
+
+            // Build channel info string
+            String channelInfo = "";
+            if (viewCount >= 0) {
+                channelInfo += Utils.formatViewCount(viewCount);
+            }
+            if (!uploadTime.isEmpty()) {
+                if (!channelInfo.isEmpty()) {
+                    channelInfo += " • ";
+                }
+                channelInfo += uploadTime;
+            }
             binding.tvChannelInfo.setText(channelInfo.isEmpty() ? "No info available" : channelInfo);
 
             // Click listener for the whole item
@@ -195,7 +164,6 @@ public class VideoAdapter extends ListAdapter<StreamInfoItem, VideoAdapter.Video
             new DiffUtil.ItemCallback<StreamInfoItem>() {
                 @Override
                 public boolean areItemsTheSame(@NonNull StreamInfoItem oldItem, @NonNull StreamInfoItem newItem) {
-                    // Use URL as unique identifier
                     if (oldItem == null || newItem == null) {
                         return oldItem == newItem;
                     }
@@ -207,8 +175,6 @@ public class VideoAdapter extends ListAdapter<StreamInfoItem, VideoAdapter.Video
                     if (oldItem == null || newItem == null) {
                         return oldItem == newItem;
                     }
-                    
-                    // Compare key properties that affect the UI
                     return Objects.equals(oldItem.getName(), newItem.getName()) &&
                            Objects.equals(oldItem.getUploaderName(), newItem.getUploaderName()) &&
                            oldItem.getViewCount() == newItem.getViewCount() &&

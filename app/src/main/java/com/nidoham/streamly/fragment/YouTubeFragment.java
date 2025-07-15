@@ -1,5 +1,7 @@
 package com.nidoham.streamly.fragment;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -57,6 +59,11 @@ public class YouTubeFragment extends Fragment {
             public void onVideoClick(StreamInfoItem video) {
                 Toast.makeText(getContext(), "Clicked: " + video.getName(), Toast.LENGTH_SHORT).show();
                 // TODO: Implement video detail or playback logic here
+                
+                Intent i = new Intent();
+                i.setAction(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(video.getUrl()));
+                getContext().startActivity(i);
             }
 
             @Override

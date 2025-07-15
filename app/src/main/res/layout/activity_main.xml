@@ -58,7 +58,7 @@
                      android:src="@drawable/ic_settings"
                      android:background="?attr/selectableItemBackgroundBorderless"
                      app:layout_constraintTop_toTopOf="parent"
-                     android:layout_marginHorizontal="15dp"
+                     android:layout_marginHorizontal="25dp"
                      app:layout_constraintEnd_toStartOf="@id/action_downloads"
                      app:layout_constraintBottom_toBottomOf="parent"
                      android:focusable="true"

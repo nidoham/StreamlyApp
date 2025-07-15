@@ -1,20 +1,20 @@
 {
   "allFiles": [
     {
-      "file": "/storage/emulated/0/AndroidIDEProjects/Streamly/app/src/main/res/layout/item_videos.xml",
+      "file": "/storage/emulated/0/AndroidIDEProjects/Streamly/app/src/main/java/com/nidoham/streamly/util/TimeAgoFormatter.java",
       "selection": {
         "end": {
-          "column": 43,
-          "index": 2030,
-          "line": 54
+          "column": 1,
+          "index": 1494,
+          "line": 34
         },
         "start": {
-          "column": 43,
-          "index": 2030,
-          "line": 54
+          "column": 1,
+          "index": 1494,
+          "line": 34
         }
       }
     }
   ],
-  "selectedFile": "/storage/emulated/0/AndroidIDEProjects/Streamly/app/src/main/res/layout/item_videos.xml"
+  "selectedFile": "/storage/emulated/0/AndroidIDEProjects/Streamly/app/src/main/java/com/nidoham/streamly/util/TimeAgoFormatter.java"
 }
